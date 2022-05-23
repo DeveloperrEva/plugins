@@ -21,8 +21,8 @@ plugin_category = "misc"
     pattern="direct(?: |$)([\s\S]*)",
     command=("direct", plugin_category),
     info={
-        "header": "To generate a direct download link from a URL.",
-        "description": "Reply to a link or paste a URL to generate a direct download link.",
+        "header": "Создание прямой ссылки для скачивания из URL-адреса.",
+        "description": "Ответьте на ссылку или вставьте URL-адрес, чтобы создать прямую ссылку для скачивания..",
         "supported links": [
             "Google Drive",
             "Cloud Mail",
@@ -45,8 +45,8 @@ async def direct_link_generator(event):
         if textx:
             message = textx.text
         else:
-            return await edit_delete(event, "`Usage: .direct <url>`")
-    catevent = await edit_or_reply(event, "`Processing...`")
+            return await edit_delete(event, "`Использование: .direct <url>`")
+    catevent = await edit_or_reply(event, "`Обработка...`")
     reply = ""
     links = re.findall(r"\bhttps?://.*\.\S+", message)
     if not links:
@@ -74,7 +74,7 @@ async def direct_link_generator(event):
         elif "androidfilehost.com" in link:
             reply += androidfilehost(link)
         else:
-            reply += re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + "is not supported"
+            reply += re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + "не поддерживается"
     await catevent.edit(reply)
 
 
@@ -84,7 +84,7 @@ def gdrive(url: str) -> str:
     try:
         link = re.findall(r"\bhttps?://drive\.google\.com\S+", url)[0]
     except IndexError:
-        reply = "`No Google drive links found`\n"
+        reply = "`Ссылки на гугл диск не найдены`\n"
         return reply
     file_id = ""
     reply = ""

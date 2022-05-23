@@ -91,7 +91,7 @@ temp = """{ALIVE_TEXT}
 **{EMOJI} Версия бота :** `{catver}`
 **{EMOJI} Версия Python :** `{pyver}`
 **{EMOJI} Работает :** `{uptime}`
-**{EMOJI} Мастер:** {mention}"""
+**{EMOJI} Владелец:** {mention}"""
 
 
 @catub.cat_cmd(
@@ -113,7 +113,7 @@ async def amireallyalive(event):
     cat_caption += f"**{EMOJI} Версия Telethon :** `{version.__version__}\n`"
     cat_caption += f"**{EMOJI} Версия бота :** `{catversion}`\n"
     cat_caption += f"**{EMOJI} Версия Python :** `{python_version()}\n`"
-    cat_caption += f"**{EMOJI} Мастер:** {mention}\n"
+    cat_caption += f"**{EMOJI} Владелец:** {mention}\n"
     results = await event.client.inline_query(Config.TG_BOT_USERNAME, cat_caption)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()

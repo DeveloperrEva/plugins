@@ -7,7 +7,7 @@ plugin_category = "fun"
     pattern="ded ([\s\S]*)",
     command=("ded", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}ded <text>",
     },
 )
@@ -37,7 +37,7 @@ async def _(event):
     pattern="killer ([\s\S]*)",
     command=("killer", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}killer <text>",
     },
 )
@@ -335,7 +335,7 @@ R = (
     pattern="monster$",
     command=("monster", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}monster",
     },
 )
@@ -348,7 +348,7 @@ async def bluedevilmonster(monster):
     pattern="pig$",
     command=("pig", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}pig",
     },
 )
@@ -361,7 +361,7 @@ async def bluedevilpig(pig):
     pattern="gun$",
     command=("gun", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}gun",
     },
 )
@@ -374,7 +374,7 @@ async def bluedevilgun(gun):
     pattern="dog$",
     command=("dog", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}dog",
     },
 )
@@ -387,7 +387,7 @@ async def bluedevildog(dog):
     pattern="hello$",
     command=("hello", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}hello",
     },
 )
@@ -400,7 +400,7 @@ async def bluedevilhello(hello):
     pattern="hmf$",
     command=("hmf", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}hmf",
     },
 )
@@ -413,7 +413,7 @@ async def bluedevilhmf(hmf):
     pattern="couple$",
     command=("couple", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}couple",
     },
 )
@@ -426,7 +426,7 @@ async def bluedevilcouple(couple):
     pattern="sup$",
     command=("sup", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}sup",
     },
 )
@@ -439,7 +439,7 @@ async def bluedevilsupreme(supreme):
     pattern="india$",
     command=("india", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}india",
     },
 )
@@ -452,7 +452,7 @@ async def bluedevilindia(india):
     pattern="wc$",
     command=("wc", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}wc",
     },
 )
@@ -465,7 +465,7 @@ async def bluedevilwelcome(welcome):
     pattern="snk$",
     command=("snk", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}snk",
     },
 )
@@ -478,7 +478,7 @@ async def bluedevilsnake(snake):
     pattern="bye$",
     command=("bye", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}bye",
     },
 )
@@ -491,7 +491,7 @@ async def bluedevilbye(bye):
     pattern="shitos$",
     command=("shitos", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}shitos",
     },
 )
@@ -504,7 +504,7 @@ async def bluedevilshitos(shitos):
     pattern="dislike$",
     command=("dislike", plugin_category),
     info={
-        "header": "Just a art command try out yourself to see",
+        "header": "Просто художественная команда",
         "usage": "{tr}dislike",
     },
 )

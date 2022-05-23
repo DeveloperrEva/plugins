@@ -12,15 +12,15 @@ plugin_category = "tools"
     pattern="create (b|g|c) ([\s\S]*)",
     command=("create", plugin_category),
     info={
-        "header": "To create a private group/channel with userbot.",
-        "description": "Use this cmd to create super group , normal group or channel.",
+        "header": "Чтобы создать частную группу/канал с юзерботом.",
+        "description": "Используйте эту команду для создания супергруппы, формальной группы или канала..",
         "flags": {
-            "b": "to create a private super group",
-            "g": "To create a private basic group.",
-            "c": "to create a private channel",
+            "b": "создать частную супергруппу",
+            "g": "Чтобы создать частную базовую группу.",
+            "c": "создать приватный канал",
         },
         "usage": "{tr}create (b|g|c) <name of group/channel>",
-        "examples": "{tr}create b catuserbot",
+        "examples": "{tr}create b userbot",
     },
 )
 async def _(event):
@@ -28,9 +28,9 @@ async def _(event):
     type_of_group = event.pattern_match.group(1)
     group_name = event.pattern_match.group(2)
     if type_of_group == "c":
-        descript = "This is a Test Channel created using catuserbot"
+        descript = "Это тестовый канал, созданный с помощью userbot."
     else:
-        descript = "This is a Test Group created using catuserbot"
+        descript = "Это тестовая группа, созданная с помощью userbot."
     if type_of_group == "g":
         try:
             result = await event.client(
@@ -48,10 +48,10 @@ async def _(event):
                 )
             )
             await edit_or_reply(
-                event, f"Group `{group_name}` created successfully. Join {result.link}"
+                event, f"Группа `{group_name}` успешно создана. Зайти {result.link}"
             )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n{str(e)}")
+            await edit_delete(event, f"**Ошибка:**\n{str(e)}")
     elif type_of_group == "c":
         try:
             r = await event.client(
@@ -69,10 +69,10 @@ async def _(event):
             )
             await edit_or_reply(
                 event,
-                f"Channel `{group_name}` created successfully. Join {result.link}",
+                f"Канал `{group_name}` успешно создан. Зайти {result.link}",
             )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n{e}")
+            await edit_delete(event, f"**Ошибка:**\n{e}")
     elif type_of_group == "b":
         answer = await create_supergroup(
             group_name, event.client, Config.TG_BOT_USERNAME, descript
@@ -80,9 +80,9 @@ async def _(event):
         if answer[0] != "error":
             await edit_or_reply(
                 event,
-                f"Mega group `{group_name}` created successfully. Join {answer[0].link}",
+                f"Мегагруппа `{group_name}` успешно создана. ЗАйти {answer[0].link}",
             )
         else:
-            await edit_delete(event, f"**Error:**\n{answer[1]}")
+            await edit_delete(event, f"**Ошибка:**\n{answer[1]}")
     else:
-        await edit_delete(event, "Read `.help create` to know how to use me")
+        await edit_delete(event, "Прочиатй `.help create` чтобы понять, как использовать меня")

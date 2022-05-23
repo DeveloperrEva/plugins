@@ -56,14 +56,14 @@ oldvars = {
     pattern="(set|get|del)dv(?: |$)([\s\S]*)",
     command=("dv", plugin_category),
     info={
-        "header": "Set vars in database or Check or Delete",
-        "description": "Set , Fetch or Delete values or vars directly in database without restart or heroku vars.\n\nYou can set multiple pics by giving space after links in alive, ialive, pm permit.",
+        "header": "Установить переменные в базе данных или проверить или удалить",
+        "description": "Установка, выборка или удаление значений или переменных непосредственно в базе данных без перезапуска или переменных героку.\n\nВы можете установить несколько картинок, указав пробел после ссылок в live, ialive, pm..",
         "flags": {
-            "set": "To set new var in database or modify the old var",
-            "get": "To show the already existing var value.",
-            "del": "To delete the existing value",
+            "set": "Чтобы установить новую переменную в базе данных или изменить старую переменную",
+            "get": "Чтобы показать уже существующее значение var.",
+            "del": "Чтобы удалить существующее значение",
         },
-        "var name": "**[list of vars]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
+        "var name": "**[Список переменных]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
         "usage": [
             "{tr}setdv <var name> <var value>",
             "{tr}getdv <var name>",
@@ -84,7 +84,7 @@ async def bad(event):  # sourcery no-metrics
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
     if not vname:
         return await edit_delete(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"**📑 Дайте правильное имя var из списка :\n\n**{vnlist}", time=60
         )
     vinfo = None
     if " " in vname:
@@ -100,7 +100,7 @@ async def bad(event):  # sourcery no-metrics
                 if not vinfo or vinfo != "Me":
                     return await edit_delete(
                         event,
-                        "**To save your Current Profile info Set the value:**\\n `.setdv DEFAULT_USER Me`",
+                        "**Чтобы сохранить информацию о текущем профиле Установите значение:**\\n `.setdv DEFAULT_USER Me`",
                     )
 
                 USERINFO = await catub.get_entity(catub.uid)
@@ -130,23 +130,23 @@ async def bad(event):  # sourcery no-metrics
                 usrln = gvarstatus("LAST_NAME") or None
                 usrbio = gvarstatus("DEFAULT_BIO") or None
                 usrphoto = gvarstatus("DEFAULT_PIC") or None
-                vinfo = f'**Name:** `{gvarstatus("DEFAULT_NAME")}`\n**First Name:** `{gvarstatus("FIRST_NAME")}`\n**Last Name:** `{usrln}`\n**Bio:** `{usrbio}`\n**Photo:** `{usrphoto}`'
+                vinfo = f'**Никнейм:** `{gvarstatus("DEFAULT_NAME")}`\n**Имя:** `{gvarstatus("FIRST_NAME")}`\n**Фамилия:** `{usrln}`\n**Био:** `{usrbio}`\n**Фото:** `{usrphoto}`'
             else:
                 if not vinfo and vname in ["ALIVE_TEMPLATE", "PING_TEMPLATE"]:
                     return await edit_delete(event, "Check @cat_alive")
                 if not vinfo:
                     return await edit_delete(
                         event,
-                        f"Give some values which you want to save for **{vname}**",
+                        f"Дайте несколько значений, которые вы хотите сохранить для **{vname}**",
                     )
                 check = vinfo.split(" ")
                 for i in check:
                     if vname == "DEFAULT_PIC" and not url(i):
-                        return await edit_delete(event, "**Give me a correct link...**")
+                        return await edit_delete(event, "**Дай правильную ссылку...**")
                     elif vname == "DIGITAL_PIC" and not url(i):
-                        return await edit_delete(event, "**Give me a correct link...**")
+                        return await edit_delete(event, "**Дай правильную ссылку...**")
                     elif (("PIC" in vname) or ("pic" in vname)) and not url(i):
-                        return await edit_delete(event, "**Give me a correct link...**")
+                        return await edit_delete(event, "**Дай правильную ссылку...**")
                     elif (
                         vname == "DIGITAL_PIC"
                         or vname == "DEFAULT_PIC"
@@ -159,23 +159,23 @@ async def bad(event):  # sourcery no-metrics
                 if vname == "DEFAULT_BIO" and len(vinfo) > 70:
                     return await edit_or_reply(
                         event,
-                        f"No of characters in your bio must not exceed 70 so compress it and set again\n`{vinfo}`",
+                        f"Количество символов в вашей биографии не должно превышать 70, поэтому сожмите его и установите снова.\n`{vinfo}`",
                     )
                 addgvar(vname, vinfo)
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
                     f"#SET_DATAVAR\
-                    \n**{vname}** is updated newly in database as below",
+                    \n**{vname}** обновляется новым в базе данных, как показано ниже",
                 )
                 await event.client.send_message(BOTLOG_CHATID, vinfo, silent=True)
             await edit_delete(
-                event, f"📑 Value of **{vname}** is changed to :- `{vinfo}`", time=20
+                event, f"📑 Ценность **{vname}** меняется на :- `{vinfo}`", time=20
             )
         if cmd == "get":
             var_data = gvarstatus(vname)
             await edit_delete(
-                event, f"📑 Value of **{vname}** is  ```{var_data}```", time=20
+                event, f"📑 Ценность **{vname}** это  ```{var_data}```", time=20
             )
         elif cmd == "del":
             if vname == "DEFAULT_USER":
@@ -192,16 +192,16 @@ async def bad(event):  # sourcery no-metrics
                 await event.client.send_message(
                     BOTLOG_CHATID,
                     f"#DEL_DATAVAR\
-                    \n**{vname}** is deleted from database",
+                    \n**{vname}** удаляется из базы данных",
                 )
             await edit_delete(
                 event,
-                f"📑 Value of **{vname}** is now deleted & set to default.",
+                f"📑 Ценность **{vname}** теперь удален и установлен по умолчанию.",
                 time=20,
             )
     else:
         await edit_delete(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"**📑 Дайте правильное имя var из списка :\n\n**{vnlist}", time=60
         )
 
 
@@ -209,33 +209,33 @@ async def bad(event):  # sourcery no-metrics
     pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("custom", plugin_category),
     info={
-        "header": "To customize your CatUserbot.",
+        "header": "Чтобы настроить своего Userbot.",
         "options": {
-            "pmpermit": "To customize pmpermit text. ",
-            "pmblock": "To customize pmpermit block message.",
-            "startmsg": "To customize startmsg of bot when some one started it.",
-            "pmpic": "To customize pmpermit pic. Reply to media url or text containing media.",
+            "pmpermit": "Чтобы настроить текст pmpermit. ",
+            "pmblock": "Чтобы настроить сообщение блокировки pmpermit.",
+            "startmsg": "Чтобы настроить стартовое сообщение бота, когда кто-то его запустил.",
+            "pmpic": "Чтобы настроить pmpermit pic. Ответить на URL-адрес медиа или текст, содержащий медиа.",
         },
         "custom": {
-            "{mention}": "mention user",
-            "{first}": "first name of user",
-            "{last}": "last name of user",
-            "{fullname}": "fullname of user",
-            "{username}": "username of user",
-            "{userid}": "userid of user",
-            "{my_first}": "your first name",
-            "{my_last}": "your last name ",
-            "{my_fullname}": "your fullname",
-            "{my_username}": "your username",
-            "{my_mention}": "your mention",
-            "{totalwarns}": "totalwarns",
-            "{warns}": "warns",
-            "{remwarns}": "remaining warns",
+            "{mention}": "Упомянуть пользователя",
+            "{first}": "Имя пользователя",
+            "{last}": "Фамилия пользователя",
+            "{fullname}": "Полное имя пользователя",
+            "{username}": "Имя пользователя",
+            "{userid}": "Userid пользователя",
+            "{my_first}": "Твое имя",
+            "{my_last}": "Твоя фамилия ",
+            "{my_fullname}": "Ваше полное имя",
+            "{my_username}": "Ваш логин",
+            "{my_mention}": "Ваше упоминание",
+            "{totalwarns}": "Всего предупреждений",
+            "{warns}": "Предупреждения",
+            "{remwarns}": "Остальные предупреждения",
         },
         "usage": [
             "{tr}custom <option> reply",
         ],
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "NOTE": "Вы можете установить, получить или удалить их, `{tr}setdv` , `{tr}getdv` & `{tr}deldv` также.",
     },
 )
 async def custom_catuserbot(event):
@@ -245,7 +245,7 @@ async def custom_catuserbot(event):
     if reply:
         text = reply.text
     if text is None:
-        return await edit_delete(event, "__Reply to custom text or url__")
+        return await edit_delete(event, "Ответ на пользовательский текст или URL")
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
         addgvar("pmpermit_txt", text)
@@ -256,15 +256,15 @@ async def custom_catuserbot(event):
     if input_str == "pmpic":
         urls = extractor.find_urls(reply.text)
         if not urls:
-            return await edit_delete(event, "`the given link is not supported`", 5)
+            return await edit_delete(event, "`данная ссылка не поддерживается`", 5)
         text = " ".join(urls)
         addgvar("pmpermit_pic", text)
-    await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
+    await edit_or_reply(event, f"__Ваш кастом {input_str} был обновлен")
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#SET_DATAVAR\
-                    \n**{input_str}** is updated newly in database as below",
+                    \n**{input_str}** обновляется новым в базе данных, как показано ниже",
         )
         await event.client.send_message(BOTLOG_CHATID, text, silent=True)
 
@@ -273,17 +273,17 @@ async def custom_catuserbot(event):
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),
     info={
-        "header": "To delete costomization of your CatUserbot.",
+        "header": "Чтобы удалить настройку вашего Userbot.",
         "options": {
-            "pmpermit": "To delete custom pmpermit text",
-            "pmblock": "To delete custom pmpermit block message",
-            "pmpic": "To delete custom pmpermit pic.",
-            "startmsg": "To delete custom start message of bot when some one started it.",
+            "pmpermit": "Чтобы удалить пользовательский текст pmpermit",
+            "pmblock": "Чтобы удалить пользовательское сообщение о блокировке разрешений",
+            "pmpic": "Чтобы удалить изображение пользовательского разрешения.",
+            "startmsg": "Чтобы удалить пользовательское стартовое сообщение бота, когда кто-то его запустил.",
         },
         "usage": [
             "{tr}delcustom <option>",
         ],
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "NOTE": "Вы можете установить, получить или удалить их, `{tr}setdv` , `{tr}getdv` & `{tr}deldv` также.",
     },
 )
 async def custom_catuserbot(event):
@@ -291,28 +291,28 @@ async def custom_catuserbot(event):
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
         if gvarstatus("pmpermit_txt") is None:
-            return await edit_delete(event, "__You haven't customzied your pmpermit.__")
+            return await edit_delete(event, "__Вы не настроили свой pmpermit.__")
         delgvar("pmpermit_txt")
     if input_str == "pmblock":
         if gvarstatus("pmblock") is None:
-            return await edit_delete(event, "__You haven't customzied your pmblock.__")
+            return await edit_delete(event, "__Вы не настроили свой pmblock.__")
         delgvar("pmblock")
     if input_str == "pmpic":
         if gvarstatus("pmpermit_pic") is None:
-            return await edit_delete(event, "__You haven't customzied your pmpic.__")
+            return await edit_delete(event, "__Вы не настроили свой pmpic.__")
         delgvar("pmpermit_pic")
     if input_str == "startmsg":
         if gvarstatus("START_TEXT") is None:
             return await edit_delete(
-                event, "__You haven't customzied your start msg in bot.__"
+                event, "__Вы не настроили свой старт сообщение в боте.__"
             )
         delgvar("START_TEXT")
     await edit_or_reply(
-        event, f"__successfully deleted your customization of {input_str}.__"
+        event, f"__успешно удалил вашу настройку {input_str}.__"
     )
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#DEL_DATAVAR\
-                    \n**{input_str}** is deleted from database",
+                    \n**{input_str}** удаляется из базы данных",
         )

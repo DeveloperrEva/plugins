@@ -11,8 +11,8 @@ plugin_category = "utils"
     pattern="calc ([\s\S]*)",
     command=("calc", plugin_category),
     info={
-        "header": "To solve basic mathematics equations.",
-        "description": "Solves the given maths equation by BODMAS rule.",
+        "header": "Чтобы решить основные математические уравнения.",
+        "description": "Решите данное математическое уравнение по правилу BODMAS..",
         "usage": "{tr}calc 2+9",
     },
 )
@@ -42,8 +42,8 @@ async def calculator(event):
     elif stdout:
         evaluation = stdout
     else:
-        evaluation = "Sorry I can't find result for the given equation"
-    final_output = "**EQUATION**: `{}` \n\n **SOLUTION**: \n`{}` \n".format(
+        evaluation = "Извините, я не могу найти результат для данного уравнения"
+    final_output = "**УРАВНЕНИЕ**: `{}` \n\n **РЕШЕНИЕ**: \n`{}` \n".format(
         cmd, evaluation
     )
     await event.edit(final_output)

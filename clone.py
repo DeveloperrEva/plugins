@@ -19,7 +19,7 @@ DEFAULTUSERBIO = (
     pattern="clone(?:\s|$)([\s\S]*)",
     command=("clone", plugin_category),
     info={
-        "header": "To clone account of mentiond user or replied user",
+        "header": "Клонировать учетную запись упомянутого пользователя или ответившего пользователя",
         "usage": "{tr}clone <username/userid/reply>",
     },
 )
@@ -51,11 +51,11 @@ async def _(event):
     except Exception as e:
         return await edit_delete(event, f"**Failed to clone due to error:**\n__{e}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**LET US BE AS ONE**")
+    await edit_delete(event, "**ДАВАЙТЕ БУДЕМ КАК ОДИН**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#CLONED\nsuccessfully cloned [{first_name}](tg://user?id={user_id })",
+            f"#CLONED\nуспешно склонированно [{first_name}](tg://user?id={user_id })",
         )
 
 
@@ -63,8 +63,8 @@ async def _(event):
     pattern="revert$",
     command=("revert", plugin_category),
     info={
-        "header": "To revert back to your original name , bio and profile pic",
-        "note": "For proper Functioning of this command you need to set DEFAULT_USER in Database",
+        "header": "Чтобы вернуться к исходному имени, биографии и аватарке",
+        "note": "Для правильного функционирования этой команды вам необходимо установить ПОЛЬЗОВАТЕЛЬ ПО УМОЛЧАНИЮ в базе данных.",
         "usage": "{tr}revert",
     },
 )
@@ -81,9 +81,9 @@ async def revert(event):
     await event.client(functions.account.UpdateProfileRequest(about=bio))
     await event.client(functions.account.UpdateProfileRequest(first_name=firstname))
     await event.client(functions.account.UpdateProfileRequest(last_name=lastname))
-    await edit_delete(event, "successfully reverted to your account back")
+    await edit_delete(event, "успешно вернулся к вашей учетной записи обратно")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#REVERT\nsuccessfully reverted back to your profile",
+            "#REVERT\nуспешно вернулся к вашему профилю",
         )

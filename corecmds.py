@@ -25,8 +25,8 @@ def plug_checker(plugin):
     pattern="install$",
     command=("install", plugin_category),
     info={
-        "header": "To install an external plugin.",
-        "description": "Reply to any external plugin(supported by cat) to install it in your bot.",
+        "header": "Чтобы установить внешний плагин.",
+        "description": "Ответьте на любой внешний плагин, чтобы установить его в свой бот..",
         "usage": "{tr}install",
     },
 )
@@ -44,13 +44,13 @@ async def install(event):
                 load_module(shortname.replace(".py", ""))
                 await edit_delete(
                     event,
-                    f"Installed Plugin `{os.path.basename(downloaded_file_name)}`",
+                    f"Установленный плагин `{os.path.basename(downloaded_file_name)}`",
                     10,
                 )
             else:
                 os.remove(downloaded_file_name)
                 await edit_delete(
-                    event, "Errors! This plugin is already installed/pre-installed.", 10
+                    event, "Ошибки! Этот плагин уже installed/pre-installed.", 10
                 )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n`{e}`", 10)
@@ -61,8 +61,8 @@ async def install(event):
     pattern="load ([\s\S]*)",
     command=("load", plugin_category),
     info={
-        "header": "To load a plugin again. if you have unloaded it",
-        "description": "To load a plugin again which you unloaded by {tr}unload",
+        "header": "Чтобы снова загрузить плагин. если ты его разгрузил",
+        "description": "Чтобы снова загрузить плагин, который вы выгрузили с помощью {tr}unload",
         "usage": "{tr}load <plugin name>",
         "examples": "{tr}load markdown",
     },
@@ -76,11 +76,11 @@ async def load(event):
         except BaseException:
             pass
         load_module(shortname)
-        await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
+        await edit_delete(event, f"`Успешно загружено {shortname}`", 10)
     except Exception as e:
         await edit_or_reply(
             event,
-            f"Could not load {shortname} because of the following error.\n{e}",
+            f"Не мог загрузить {shortname} из-за следующей ошибки.\n{e}",
         )
 
 
@@ -88,7 +88,7 @@ async def load(event):
     pattern="send ([\s\S]*)",
     command=("send", plugin_category),
     info={
-        "header": "To upload a plugin file to telegram chat",
+        "header": "Чтобы загрузить файл плагина в телеграмм чат",
         "usage": "{tr}send <plugin name>",
         "examples": "{tr}send markdown",
     },
@@ -107,7 +107,7 @@ async def send(event):
             allow_cache=False,
             reply_to=reply_to_id,
             thumb=thumb,
-            caption=f"**➥ Plugin Name:-** `{input_str}`",
+            caption=f"**➥ Название плагина:-** `{input_str}`",
         )
         await event.delete()
     else:
@@ -118,8 +118,8 @@ async def send(event):
     pattern="unload ([\s\S]*)",
     command=("unload", plugin_category),
     info={
-        "header": "To unload a plugin temporarily.",
-        "description": "You can load this unloaded plugin by restarting or using {tr}load cmd. Useful for cases like seting notes in rose bot({tr}unload markdown).",
+        "header": "Чтобы временно выгрузить плагин.",
+        "description": "Вы можете загрузить этот незагруженный плагин, перезапустив его или используя {tr}load cmd. Полезно для таких случаев, как установка заметок в розовом боте ({tr} unload markdown).",
         "usage": "{tr}unload <plugin name>",
         "examples": "{tr}unload markdown",
     },
@@ -129,18 +129,18 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"Unloaded {shortname} successfully")
+        await edit_or_reply(event, f"Разгружено {shortname} успешно")
     except Exception as e:
-        await edit_or_reply(event, f"Successfully unload {shortname}\n{e}")
+        await edit_or_reply(event, f"Успешно выгружено {shortname}\n{e}")
 
 
 @catub.cat_cmd(
     pattern="uninstall ([\s\S]*)",
     command=("uninstall", plugin_category),
     info={
-        "header": "To uninstall a plugin temporarily.",
-        "description": "To stop functioning of that plugin and remove that plugin from bot.",
-        "note": "To unload a plugin permanently from bot set NO_LOAD var in heroku with that plugin name, give space between plugin names if more than 1.",
+        "header": "Чтобы временно удалить плагин.",
+        "description": "Чтобы остановить работу этого плагина и удалить этот плагин из бота.",
+        "note": "Чтобы навсегда выгрузить плагин из бота, установите NO_LOAD var в хероку с этим именем плагина, дайте пробел между именами плагинов, если их больше 1..",
         "usage": "{tr}uninstall <plugin name>",
         "examples": "{tr}uninstall markdown",
     },
@@ -151,7 +151,7 @@ async def unload(event):
     path = plug_checker(shortname)
     if not os.path.exists(path):
         return await edit_delete(
-            event, f"There is no plugin with path {path} to uninstall it"
+            event, f"Нет плагина с путем {path} чтобы удалить его"
         )
     os.remove(path)
     if shortname in CMD_LIST:
@@ -162,9 +162,9 @@ async def unload(event):
         CMD_HELP.pop(shortname)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"{shortname} is Uninstalled successfully")
+        await edit_or_reply(event, f"{shortname} Удален успешно")
     except Exception as e:
-        await edit_or_reply(event, f"Successfully uninstalled {shortname}\n{e}")
+        await edit_or_reply(event, f"Успешно удалено {shortname}\n{e}")
     if shortname in PLG_INFO:
         for cmd in PLG_INFO[shortname]:
             CMD_INFO.pop(cmd)

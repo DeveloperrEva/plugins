@@ -20,13 +20,13 @@ from ..sql_helper.globals import gvarstatus
 plugin_category = "fun"
 
 tired_response = [
-    "I am little tired, Please give me some rest",
-    "Who are you to ask me questions Continuously",
-    "Leave me alone for some times",
-    "Time to Sleep, I will get back to you soon",
-    "I have a job to do, Come back later",
-    "I need to rest, leave me alone for some times",
-    "I am not feeling well, Please Come back later",
+    "Я немного устал, пожалуйста, дайте мне немного отдохнуть",
+    "Кто ты такой, чтобы постоянно задавать мне вопросы?",
+    "Оставь меня в покое на иногда",
+    "Пора спать, я скоро вернусь к тебе",
+    "У меня есть работа, вернись позже",
+    "Мне нужно отдохнуть, иногда оставляй меня в покое",
+    "Я плохо себя чувствую, пожалуйста, зайдите позже",
 ]
 
 
@@ -34,7 +34,7 @@ tired_response = [
     pattern="addai$",
     command=("addai", plugin_category),
     info={
-        "header": "To add ai chatbot to replied account.",
+        "header": "Чтобы добавить ИИ-чат-бота в ответившую учетную запись.",
         "usage": "{tr}addai <reply>",
     },
 )
@@ -42,9 +42,9 @@ async def add_chatbot(event):
     "To enable ai for the replied person"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "`Reply to a User's message to activate ai on `"
+            event, "`Ответьте на сообщение пользователя, чтобы активировать ИИ на `"
         )
-    catevent = await edit_or_reply(event, "`Adding ai to user...`")
+    catevent = await edit_or_reply(event, "`Добавление ИИ пользователю...`")
     user, rank = await get_user_from_event(event, catevent, nogroup=True)
     if not user:
         return
@@ -60,20 +60,20 @@ async def add_chatbot(event):
     user_name = user.first_name
     user_username = user.username
     if is_added(chat_id, user_id):
-        return await edit_or_reply(event, "`The user is already enabled with ai.`")
+        return await edit_or_reply(event, "`Пользователь уже включен с ИИ.`")
     try:
         addai(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{e}`")
+        await edit_delete(catevent, f"**Ошибка:**\n`{e}`")
     else:
-        await edit_or_reply(catevent, "Hi")
+        await edit_or_reply(catevent, "Привет")
 
 
 @catub.cat_cmd(
     pattern="rmai$",
     command=("rmai", plugin_category),
     info={
-        "header": "To stop ai for that user messages.",
+        "header": "Чтобы остановить ИИ для этого пользовательского сообщения.",
         "usage": "{tr}rmai <reply>",
     },
 )
@@ -81,7 +81,7 @@ async def remove_chatbot(event):
     "To stop ai for that user"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "Reply to a User's message to stop ai on him."
+            event, "Ответьте на сообщение пользователя, чтобы остановить его."
         )
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
@@ -90,20 +90,20 @@ async def remove_chatbot(event):
         try:
             remove_ai(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{e}`")
+            await edit_delete(catevent, f"**Ошибка:**\n`{e}`")
         else:
-            await edit_or_reply(event, "Ai has been stopped for the user")
+            await edit_or_reply(event, "ИИ был остановлен для пользователя")
     else:
-        await edit_or_reply(event, "The user is not activated with ai")
+        await edit_or_reply(event, "Пользователь не активирован с помощью ИИ")
 
 
 @catub.cat_cmd(
     pattern="delai( -a)?",
     command=("delai", plugin_category),
     info={
-        "header": "To delete ai in this chat.",
-        "description": "To stop ai for all enabled users in this chat only..",
-        "flags": {"a": "To stop in all chats"},
+        "header": "Чтобы удалить ИИ в этом чате.",
+        "description": "Чтобы остановить ИИ для всех включенных пользователей только в этом чате..",
+        "flags": {"a": "Чтобы остановить во всех чатах"},
         "usage": [
             "{tr}delai",
             "{tr}delai -a",
@@ -117,35 +117,35 @@ async def delete_chatbot(event):
         lecho = get_all_users()
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled ai atleast for one user in any chat."
+                event, "Вы не включили ИИ хотя бы для одного пользователя ни в одном чате.."
             )
         try:
             remove_all_users()
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edit_delete(event, f"**Ошибка:**\n`{str(e)}`", 10)
         else:
-            await edit_or_reply(event, "Deleted ai for all enabled users in all chats.")
+            await edit_or_reply(event, "Удален ИИ для всех включенных пользователей во всех чатах.")
     else:
         lecho = get_users(event.chat_id)
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled ai atleast for one user in this chat."
+                event, "Вы не включили искусственный интеллект хотя бы для одного пользователя в этом чате."
             )
         try:
             remove_users(event.chat_id)
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{e}`", 10)
+            await edit_delete(event, f"**Ошибка:**\n`{e}`", 10)
         else:
-            await edit_or_reply(event, "Deleted ai for all enabled users in this chat")
+            await edit_or_reply(event, "Удален ИИ для всех включенных пользователей в этом чате")
 
 
 @catub.cat_cmd(
     pattern="listai( -a)?$",
     command=("listai", plugin_category),
     info={
-        "header": "shows the list of users for whom you enabled ai",
+        "header": "показывает список пользователей, для которых вы включили ИИ",
         "flags": {
-            "a": "To list ai enabled users in all chats",
+            "a": "Список пользователей с включенным ИИ во всех чатах",
         },
         "usage": [
             "{tr}listai",
@@ -157,12 +157,12 @@ async def list_chatbot(event):  # sourcery no-metrics
     "To list all users on who you enabled ai."
     input_str = event.pattern_match.group(1)
     private_chats = ""
-    output_str = "**Ai enabled users:**\n\n"
+    output_str = "**Пользователи с поддержкой ИИ:**\n\n"
     if input_str:
         lsts = get_all_users()
         group_chats = ""
         if len(lsts) <= 0:
-            return await edit_or_reply(event, "There are no ai enabled users")
+            return await edit_or_reply(event, "Нет пользователей с включенным ИИ")
         for echos in lsts:
             if echos.chat_type == "Personal":
                 if echos.user_username:
@@ -179,14 +179,14 @@ async def list_chatbot(event):  # sourcery no-metrics
                 group_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
 
         if private_chats != "":
-            output_str += "**Private Chats**\n" + private_chats + "\n\n"
+            output_str += "**Приватные чаты**\n" + private_chats + "\n\n"
         if group_chats != "":
-            output_str += "**Group Chats**\n" + group_chats
+            output_str += "**Групповые чаты**\n" + group_chats
     else:
         lsts = get_users(event.chat_id)
         if len(lsts) <= 0:
             return await edit_or_reply(
-                event, "There are no ai enabled users in this chat"
+                event, "В этом чате нет пользователей с включенным ИИ"
             )
         for echos in lsts:
             if echos.user_username:
@@ -197,7 +197,7 @@ async def list_chatbot(event):  # sourcery no-metrics
                 private_chats += (
                     f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
                 )
-        output_str = "**Ai enabled users in this chat are:**\n" + private_chats
+        output_str = "**Пользователи с поддержкой ИИ в этом чате:**\n" + private_chats
     await edit_or_reply(event, output_str)
 
 
@@ -210,7 +210,7 @@ async def ai_reply(event):
             response = await rs_client.get_ai_response(
                 message=event.message.text,
                 server="primary",
-                master="CatUserbot",
+                master="Userbot",
                 bot=master_name,
                 uid=event.client.uid,
                 language=AI_LANG,

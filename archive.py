@@ -31,8 +31,8 @@ def zipdir(dirName):
     pattern="zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
-        "header": "To compress the file/folders",
-        "description": "Will create a zip file for the given file path or folder path",
+        "header": "Чтобы сжать файл/папки",
+        "description": "Создаст zip-файл для заданного пути к файлу или пути к папке.",
         "usage": [
             "{tr}zip <file/folder path>",
         ],
@@ -43,16 +43,16 @@ async def zip_file(event):
     "To create zip file"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(event, "`Provide file path to zip`")
+        return await edit_delete(event, "`Укажите путь к файлу в zip`")
     start = datetime.now()
     if not os.path.exists(Path(input_str)):
         return await edit_or_reply(
             event,
-            f"There is no such directory or file with the name `{input_str}` check again",
+            f"Нет такого каталога или файла с именем `{input_str}` Проверьте еще раз",
         )
     if os.path.isfile(Path(input_str)):
-        return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Zipping in progress....`")
+        return await edit_delete(event, "`Сжатие файлов еще не реализовано`")
+    mone = await edit_or_reply(event, "`Выполняется сжатие....`")
     filePaths = zipdir(input_str)
     filepath = os.path.join(
         Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
@@ -64,7 +64,7 @@ async def zip_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Zipped the path `{input_str}` into `{filepath}.zip` in __{ms}__ Seconds"
+        f"Заархивирован путь `{input_str}` в `{filepath}.zip` в __{ms}__ секунд"
     )
 
 
@@ -72,8 +72,8 @@ async def zip_file(event):
     pattern="tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
-        "header": "To compress the file/folders to tar file",
-        "description": "Will create a tar file for the given file path or folder path",
+        "header": "Чтобы сжать файл/папки в файл tar",
+        "description": "Создаст tar-файл для заданного пути к файлу или папке.",
         "usage": [
             "{tr}tar <file/folder path>",
         ],
@@ -84,15 +84,15 @@ async def tar_file(event):
     "To create tar file"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(event, "`Provide file path to compress`")
+        return await edit_delete(event, "`Укажите путь к файлу для сжатия`")
     if not os.path.exists(Path(input_str)):
         return await edit_or_reply(
             event,
-            f"There is no such directory or file with the name `{input_str}` check again",
+            f"Нет такого каталога или файла с именем `{input_str}` Проверьте еще раз",
         )
     if os.path.isfile(Path(input_str)):
-        return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Tar creation in progress....`")
+        return await edit_delete(event, "`Сжатие файлов еще не реализовано`")
+    mone = await edit_or_reply(event, "`Выполняется создание Tar....`")
     start = datetime.now()
     filePaths = zipdir(input_str)
     filepath = os.path.join(
@@ -106,7 +106,7 @@ async def tar_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ Seconds"
+        f"Создал файл tar для данного пути {input_str} как `{destination}` в __{ms}__ секунд"
     )
 
 
@@ -114,8 +114,8 @@ async def tar_file(event):
     pattern="unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
-        "header": "To unpack the given zip file",
-        "description": "Reply to a zip file or provide zip file path with command to unzip the given file",
+        "header": "Чтобы распаковать данный zip-файл",
+        "description": "Ответьте на zip-файл или укажите путь к zip-файлу с командой для распаковки данного файла.",
         "usage": [
             "{tr}unzip <reply/file path>",
         ],
@@ -129,10 +129,10 @@ async def zip_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not zipfile.is_zipfile(path):
                 return await edit_delete(
-                    event, f"`The Given path {path} is not zip file to unpack`"
+                    event, f"`Данный путь {path} это не zip файл для распаковки`"
                 )
 
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await edit_or_reply(event, "`Распаковка....`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 os.path.splitext(os.path.basename(path))[0],
@@ -142,10 +142,10 @@ async def zip_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
+                f"распаковать и сохранить в `{destination}` \n**Затраченное время :** `{ms} секунд`"
             )
         else:
-            await edit_delete(event, f"I can't find that path `{input_str}`", 10)
+            await edit_delete(event, f"Я не могу найти этот путь `{input_str}`", 10)
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
@@ -153,9 +153,9 @@ async def zip_file(event):  # sourcery no-metrics
         if ext != ".zip":
             return await edit_delete(
                 event,
-                "`The replied file is not a zip file recheck the replied message`",
+                "`Ответный файл не является zip-файлом, перепроверьте ответное сообщение`",
             )
-        mone = await edit_or_reply(event, "`Unpacking....`")
+        mone = await edit_or_reply(event, "`Распаковка....`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
                 filename = attr.file_name
@@ -167,13 +167,13 @@ async def zip_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "пытаюсь скачать")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{e}__")
-        await mone.edit("`Download finished Unpacking now`")
+            return await edit_delete(mone, f"**Ошибка:**\n__{e}__")
+        await mone.edit("`Скачать готовый Распаковать сейчас`")
         destination = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY,
             os.path.splitext(os.path.basename(filename))[0],
@@ -183,13 +183,13 @@ async def zip_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
+            f"распаковать и сохранить в `{destination}` \n**Затраченное время :** `{ms} секунд`"
         )
         os.remove(filename)
     else:
         await edit_delete(
             mone,
-            "`Either reply to the zipfile or provide path of zip file along with command`",
+            "`Либо ответьте на zip-файл, либо укажите путь к zip-файлу вместе с командой`",
         )
 
 
@@ -197,8 +197,8 @@ async def zip_file(event):  # sourcery no-metrics
     pattern="untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={
-        "header": "To unpack the given tar file",
-        "description": "Reply to a tar file or provide tar file path with command to unpack the given tar file",
+        "header": "Чтобы распаковать данный файл tar",
+        "description": "Ответьте на файл tar или укажите путь к файлу tar с командой для распаковки данного файла tar.",
         "usage": [
             "{tr}untar <reply/file path>",
         ],
@@ -212,10 +212,10 @@ async def untar_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_tarfile(path):
                 return await edit_delete(
-                    event, f"`The Given path {path} is not tar file to unpack`"
+                    event, f"`Данный путь {path} это не tar-файл для распаковки`"
                 )
 
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await edit_or_reply(event, "`Распаковка....`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0]
             )
@@ -228,15 +228,15 @@ async def untar_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"**Time Taken :** `{ms} seconds`\
-                \nUnpacked the input path `{input_str}` and stored to `{destination}`"
+                f"**Затраченное время :** `{ms} секунд`\
+                \nРаспаковал входной путь `{input_str}` и хранится в `{destination}`"
             )
         else:
-            await edit_delete(event, f"I can't find that path `{input_str}`", 10)
+            await edit_delete(event, f"Я не могу найти этот путь `{input_str}`", 10)
     elif event.reply_to_msg_id:
         start = datetime.now()
         reply = await event.get_reply_message()
-        mone = await edit_or_reply(event, "`Unpacking....`")
+        mone = await edit_or_reply(event, "`Распаковка....`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
                 filename = attr.file_name
@@ -248,17 +248,17 @@ async def untar_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Пытаюсь скачать")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{e}__")
+            return await edit_delete(mone, f"**Ошибка:**\n__{e}__")
         if not is_tarfile(filename):
             return await edit_delete(
-                mone, "`The replied file is not tar file to unpack it recheck it`"
+                mone, "`Ответный файл не является файлом tar, чтобы распаковать его, проверьте его`"
             )
-        await mone.edit("`Download finished Unpacking now`")
+        await mone.edit("`Скачать готовый Распаковать сейчас`")
         destination = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(filename).split("."))[0]
         )
@@ -272,12 +272,12 @@ async def untar_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**Time Taken :** `{ms} seconds`\
-                \nUnpacked the replied file and stored to `{destination}`"
+            f"**Затраченное время :** `{ms} секунд`\
+                \nРаспаковал ответный файл и сохранил в `{destination}`"
         )
         os.remove(filename)
     else:
         await edit_delete(
             mone,
-            "`Either reply to the tarfile or provide path of tarfile along with command`",
+            "`Либо ответьте на tar-файл, либо укажите путь к tar-файлу вместе с командой`",
         )

@@ -26,8 +26,8 @@ plugin_category = "fun"
     pattern="addecho$",
     command=("addecho", plugin_category),
     info={
-        "header": "To repeat messages sent by the user.",
-        "description": "Reply to user with this cmd so from then his every text and sticker messages will be repeated back to him.",
+        "header": "Чтобы повторить сообщения, отправленные пользователем.",
+        "description": "Ответьте пользователю с помощью этой команды, после чего каждое его текстовое сообщение и стикеры будут повторяться ему..",
         "usage": "{tr}addecho <reply>",
     },
 )
@@ -35,9 +35,9 @@ async def echo(event):
     "To echo the user messages"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "`Reply to a User's message to echo his messages`"
+            event, "`Ответьте на сообщение пользователя, чтобы повторить его сообщения`"
         )
-    catevent = await edit_or_reply(event, "`Adding Echo to user...`")
+    catevent = await edit_or_reply(event, "`Добавление echo пользователю...`")
     user, rank = await get_user_from_event(event, catevent, nogroup=True)
     if not user:
         return
@@ -53,21 +53,21 @@ async def echo(event):
     user_name = user.first_name
     user_username = user.username
     if is_echo(chat_id, user_id):
-        return await edit_or_reply(event, "The user is already enabled with echo ")
+        return await edit_or_reply(event, "Пользователь уже включен с echo ")
     try:
         addecho(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{e}`")
+        await edit_delete(catevent, f"**Ошибка:**\n`{e}`")
     else:
-        await edit_or_reply(catevent, "Hi")
+        await edit_or_reply(catevent, "Привет")
 
 
 @catub.cat_cmd(
     pattern="rmecho$",
     command=("rmecho", plugin_category),
     info={
-        "header": "To stop repeating paticular user messages.",
-        "description": "Reply to user with this cmd to stop repeating his messages back.",
+        "header": "Чтобы прекратить повторение определенных пользовательских сообщений.",
+        "description": "Ответьте пользователю с помощью этой команды, чтобы прекратить повторение его сообщений в ответ.",
         "usage": "{tr}rmecho <reply>",
     },
 )
@@ -75,7 +75,7 @@ async def echo(event):
     "To stop echoing the user messages"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "Reply to a User's message to echo his messages"
+            event, "Ответьте на сообщение пользователя, чтобы повторить его сообщения"
         )
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
@@ -84,11 +84,11 @@ async def echo(event):
         try:
             remove_echo(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{e}`")
+            await edit_delete(catevent, f"**Ошибка:**\n`{e}`")
         else:
-            await edit_or_reply(event, "Echo has been stopped for the user")
+            await edit_or_reply(event, "Echo было остановлено для пользователя")
     else:
-        await edit_or_reply(event, "The user is not activated with echo")
+        await edit_or_reply(event, "Пользователь не активирован с echo")
 
 
 @catub.cat_cmd(
