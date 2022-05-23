@@ -57,6 +57,28 @@ async def set_not_afk(event):
             endtime += f"{h}h {m}m {s}s"
         else:
             endtime += f"{m}m {s}s" if m > 0 else f"{s}s"
+    current_message = event.message.message
+    if ((" " not in current_message) or (" " not in current_message)) and (
+        "on" in AFK_.USERAFK_ON
+    ):
+        shite = await event.client.send_message(
+            event.chat_id,
+            "`Больше не афк.\nБыл афк около " + endtime + "`",
+        )
+        AFK_.USERAFK_ON = {}
+        AFK_.afk_time = None
+        await asyncio.sleep(5)
+        await shite.delete()
+        AFK_.afk_on = False
+        if BOTLOG:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                "#AFKFALSE \n`Установите для режима AFK значение False\n"
+                + "Больше не афк.\nБыл афк около "
+                + endtime
+                + "`",
+            )
+
 
 @catub.cat_cmd(
     incoming=True, func=lambda e: bool(e.mentioned or e.is_private), edited=False
