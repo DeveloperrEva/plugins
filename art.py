@@ -449,16 +449,16 @@ async def bluedevilhmf(hmf):
     await edit_or_reply(hmf, G)
 
 @catub.cat_cmd(
-    pattern="dick$",
+    pattern="chlen$",
     command=("dick", plugin_category),
     info={
         "header": "Просто художественная команда",
         "usage": "{tr}dick",
     },
 )
-async def bluedevildick(dick):
+async def bluedevilchlen(chlen):
     "fun art command"
-    await edit_or_reply(dick, S)
+    await edit_or_reply(chlen, S)
 
 
 @catub.cat_cmd(
