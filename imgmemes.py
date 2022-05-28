@@ -65,7 +65,7 @@ async def nekobot(cat):
     info={
         "header": "trump tweet sticker with given custom text",
         "usage": "{tr}trump <text>",
-        "examples": "{tr}trump Catuserbot is One of the Popular userbot",
+        "examples": "{tr}trump One of the Popular userbot",
     },
 )
 async def nekobot(cat):

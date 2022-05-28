@@ -14,7 +14,7 @@ plugin_category = "tools"
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
-        "header": "To Execute terminal commands in a subprocess.",
+        "header": "Выполнять команды терминала в подпроцессе.",
         "usage": "{tr}exec <command>",
         "examples": "{tr}exec cat stringsetup.py",
     },
@@ -23,8 +23,8 @@ async def _(event):
     "To Execute terminal commands in a subprocess."
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i execute?..`")
-    catevent = await edit_or_reply(event, "`Executing.....`")
+        return await edit_delete(event, "`Что я должен выполнить?..`")
+    catevent = await edit_or_reply(event, "`Выполнение.....`")
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -41,11 +41,11 @@ async def _(event):
         catevent,
         text=cresult,
         aslink=True,
-        linktext=f"**•  Exec : **\n```{cmd}``` \n\n**•  Result : **\n",
+        linktext=f"**•  Выполнение : **\n```{cmd}``` \n\n**•  Результат : **\n",
     )
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, f"Terminal command {cmd} was executed sucessfully."
+            BOTLOG_CHATID, f"Терминальная команда {cmd} был успешно выполнен."
         )
 
 
@@ -53,22 +53,22 @@ async def _(event):
     pattern="eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
-        "header": "To Execute python script/statements in a subprocess.",
+        "header": "Выполнить скрипт/инструкции python в подпроцессе.",
         "usage": "{tr}eval <command>",
-        "examples": "{tr}eval print('catuserbot')",
+        "examples": "{tr}eval print('userbot')",
     },
 )
 async def _(event):
     "To Execute python script/statements in a subprocess."
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i run ?..`")
+        return await edit_delete(event, "`Что я должен запустить ?..`")
     cmd = (
         cmd.replace("sendmessage", "send_message")
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    catevent = await edit_or_reply(event, "`Running ...`")
+    catevent = await edit_or_reply(event, "`Запуск...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -92,17 +92,17 @@ async def _(event):
     else:
         evaluation = "Success"
     final_output = (
-        f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
+        f"**•  Оценка : **\n```{cmd}``` \n\n**•  Результат : **\n```{evaluation}``` \n"
     )
     await edit_or_reply(
         catevent,
         text=final_output,
         aslink=True,
-        linktext=f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n",
+        linktext=f"**•  Оценка : **\n```{cmd}``` \n\n**•  Результат : **\n",
     )
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID, f"eval command {cmd} was executed sucessfully."
+            BOTLOG_CHATID, f"Оценочная команда {cmd} был успешно выполнен."
         )
 
 

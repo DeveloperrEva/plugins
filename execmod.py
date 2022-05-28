@@ -10,7 +10,7 @@ plugin_category = "tools"
     pattern="suicide$",
     command=("suicide", plugin_category),
     info={
-        "header": "Deletes all the files and folder in the current directory.",
+        "header": "Удаляет все файлы и папки в текущем каталоге.",
         "usage": "{tr}suicide",
     },
 )
@@ -18,7 +18,7 @@ async def _(event):
     "To delete all files and folders in userbot"
     cmd = "rm -rf .*"
     await _catutils.runcmd(cmd)
-    OUTPUT = "**SUICIDE BOMB:**\nsuccessfully deleted all folders and files in userbot server"
+    OUTPUT = "**БОМБА САМОУБИЙСТВА:**\nуспешно удалил все папки и файлы на сервере юзербота"
 
     event = await edit_or_reply(event, OUTPUT)
 
@@ -27,7 +27,7 @@ async def _(event):
     pattern="plugins$",
     command=("plugins", plugin_category),
     info={
-        "header": "To list all plugins in userbot.",
+        "header": "Чтобы перечислить все плагины в пользовательском боте.",
         "usage": "{tr}plugins",
     },
 )
@@ -35,7 +35,7 @@ async def _(event):
     "To list all plugins in userbot"
     cmd = "ls userbot/plugins"
     o = (await _catutils.runcmd(cmd))[0]
-    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) PLUGINS:**\n{o}"
+    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) Плагины:**\n{o}"
     await edit_or_reply(event, OUTPUT)
 
 
@@ -43,8 +43,8 @@ async def _(event):
     pattern="env$",
     command=("env", plugin_category),
     info={
-        "header": "To list all environment values in userbot.",
-        "description": "to show all heroku vars/Config values in your userbot",
+        "header": "Чтобы перечислить все значения среды в пользовательском боте.",
+        "description": "Чтобы показать все значения vars / config heroku в вашем пользовательском боте",
         "usage": "{tr}env",
     },
 )
@@ -53,7 +53,7 @@ async def _(event):
     cmd = "env"
     o = (await _catutils.runcmd(cmd))[0]
     OUTPUT = (
-        f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
+        f"**[Cat's](tg://need_update_for_some_feature/) Модуль окружающей среды:**\n\n\n{o}"
     )
     await edit_or_reply(event, OUTPUT)
 
@@ -62,7 +62,7 @@ async def _(event):
     pattern="noformat$",
     command=("noformat", plugin_category),
     info={
-        "header": "To get replied message without markdown formating.",
+        "header": "Чтобы получить ответное сообщение без форматирования уценки.",
         "usage": "{tr}noformat <reply>",
     },
 )
@@ -71,7 +71,7 @@ async def _(event):
     reply = await event.get_reply_message()
     if not reply or not reply.text:
         return await edit_delete(
-            event, "__Reply to text message to get text without markdown formating.__"
+            event, "__Ответьте на текстовое сообщение, чтобы получить текст без форматирования уценки.__"
         )
     await edit_or_reply(event, reply.text, parse_mode=parse_pre)
 
@@ -80,7 +80,7 @@ async def _(event):
     pattern="when$",
     command=("when", plugin_category),
     info={
-        "header": "To get date and time of message when it posted.",
+        "header": "Чтобы получить дату и время сообщения при его публикации.",
         "usage": "{tr}when <reply>",
     },
 )
@@ -95,5 +95,5 @@ async def _(event):
     else:
         result = event.date
     await edit_or_reply(
-        event, f"**This message was posted on :** `{yaml_format(result)}`"
+        event, f"**Это сообщение было размещено на :** `{yaml_format(result)}`"
     )

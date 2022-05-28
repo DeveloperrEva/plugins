@@ -12,7 +12,7 @@ plugin_category = "utils"
     pattern="filext(?:\s|$)([\s\S]*)",
     command=("filext", plugin_category),
     info={
-        "header": "Shows you the detailed information of given extension type.",
+        "header": "Показывает подробную информацию о данном типе расширения.",
         "usage": "{tr}filext <extension>",
         "examples": "{tr}filext py",
     },

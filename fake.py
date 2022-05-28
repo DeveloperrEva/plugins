@@ -18,8 +18,8 @@ plugin_category = "fun"
     pattern="scam(?:\s|$)([\s\S]*)",
     command=("scam", plugin_category),
     info={
-        "header": "To show fake actions for a paticular period of time",
-        "description": "if time is not mentioned then it may choose random time 5 or 6 mintues for mentioning time use in seconds",
+        "header": "Чтобы показать поддельные действия за определенный период времени",
+        "description": "Если время не указано, то он может выбрать случайное время 5 или 6 минут для упоминания использования времени в секундах.",
         "usage": [
             "{tr}scam <action> <time(in seconds)>",
             "{tr}scam <action>",
@@ -84,8 +84,8 @@ async def _(event):
     pattern="prankpromote(?:\s|$)([\s\S]*)",
     command=("prankpromote", plugin_category),
     info={
-        "header": "To promote a person without admin rights",
-        "note": "You need proper rights for this",
+        "header": "Продвигать человека без прав администратора",
+        "note": "Вам нужны соответствующие права для этого",
         "usage": [
             "{tr}prankpromote <userid/username/reply>",
             "{tr}prankpromote <userid/username/reply> <custom title>",
@@ -97,7 +97,7 @@ async def _(event):
 async def _(event):
     "To promote a person without admin rights"
     new_rights = ChatAdminRights(post_messages=True)
-    catevent = await edit_or_reply(event, "`Promoting...`")
+    catevent = await edit_or_reply(event, "`Продвижение...`")
     user, rank = await get_user_from_event(event, catevent)
     if not rank:
         rank = "Admin"
@@ -106,7 +106,7 @@ async def _(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await catevent.edit("__I think you don't have permission to promote__")
+        return await catevent.edit("__Я думаю, у вас нет разрешения на рекламу__")
     except Exception as e:
         return await edit_delete(catevent, f"__{e}__", time=10)
     await catevent.edit("`Promoted Successfully! Now gib Party`")
@@ -116,8 +116,8 @@ async def _(event):
     pattern="padmin$",
     command=("padmin", plugin_category),
     info={
-        "header": "Fun animation for faking user promotion",
-        "description": "An animation that shows enabling all permissions to him that he is admin(fake promotion)",
+        "header": "Забавная анимация для имитации продвижения пользователя",
+        "description": "Анимация, показывающая включение всех разрешений для него, что он является администратором (поддельное продвижение)",
         "usage": "{tr}padmin",
     },
     groups_only=True,
@@ -126,28 +126,28 @@ async def _(event):
     "Fun animation for faking user promotion."
     animation_interval = 1
     animation_ttl = range(20)
-    event = await edit_or_reply(event, "`promoting.......`")
+    event = await edit_or_reply(event, "`Продвижение.......`")
     animation_chars = [
-        "**Promoting User As Admin...**",
-        "**Enabling All Permissions To User...**",
-        "**(1) Send Messages: ☑️**",
-        "**(1) Send Messages: ✅**",
-        "**(2) Send Media: ☑️**",
-        "**(2) Send Media: ✅**",
-        "**(3) Send Stickers & GIFs: ☑️**",
-        "**(3) Send Stickers & GIFs: ✅**",
-        "**(4) Send Polls: ☑️**",
-        "**(4) Send Polls: ✅**",
-        "**(5) Embed Links: ☑️**",
-        "**(5) Embed Links: ✅**",
-        "**(6) Add Users: ☑️**",
-        "**(6) Add Users: ✅**",
-        "**(7) Pin Messages: ☑️**",
-        "**(7) Pin Messages: ✅**",
-        "**(8) Change Chat Info: ☑️**",
-        "**(8) Change Chat Info: ✅**",
-        "**Permission Granted Successfully**",
-        f"**pRoMooTeD SuCcEsSfUlLy bY: {ALIVE_NAME}**",
+        "**Продвижение пользователя в качестве администратора...**",
+        "**Включение всех разрешений для пользователя...**",
+        "**(1) Отправить сообщения: ☑️**",
+        "**(1) Отправить сообщения: ✅**",
+        "**(2) Отправить медиа: ☑️**",
+        "**(2) Отправить медиа: ✅**",
+        "**(3) Отправить стикеры и GIF-файлы: ☑️**",
+        "**(3) Отправить стикеры и GIF-файлы: ✅**",
+        "**(4) Отправить опросы: ☑️**",
+        "**(4) Отправить опросы: ✅**",
+        "**(5) Вставить ссылки: ☑️**",
+        "**(5) Вставить ссылки: ✅**",
+        "**(6) Добавить пользователей: ☑️**",
+        "**(6) Добавить пользователей: ✅**",
+        "**(7) Закрепить сообщения: ☑️**",
+        "**(7) Закрепить сообщения: ✅**",
+        "**(8) Изменить информацию о чате: ☑️**",
+        "**(8) Изменить информацию о чате: ✅**",
+        "**Разрешение предоставлено успешно**",
+        f"**УСПЕШНО ПРОДВИГАЕТСЯ: {ALIVE_NAME}**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
