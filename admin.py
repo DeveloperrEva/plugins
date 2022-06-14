@@ -512,7 +512,6 @@ async def endmute(event):
 )
 async def startmute(event):
     "To mute a person in that paticular chat"
-    if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
             return await event.edit(
@@ -529,60 +528,8 @@ async def startmute(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#PM_MUTE\n"
+                "#SWmute\n"
                 f"**Никнейм :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
-            )
-    else:
-        chat = await event.get_chat()
-        admin = chat.admin_rights
-        creator = chat.creator
-        if not admin and not creator:
-            return await edit_or_reply(
-                event, "`Вы не можете заглушить человека без прав администратора niqq.` ಥ﹏ಥ  "
-            )
-        user, reason = await get_user_from_event(event)
-        if not user:
-            return
-        if user.id == catub.uid:
-            return await edit_or_reply(event, "`Извините, я не могу отключить звук`")
-        if is_muted(user.id, event.chat_id):
-            return await edit_or_reply(
-                event, "`Этот пользователь уже заглушен в этом чате ~~lmfao sed rip~~`"
-            )
-        result = await event.client.get_permissions(event.chat_id, user.id)
-        try:
-            if result.participant.banned_rights.send_messages:
-                return await edit_or_reply(
-                    event,
-                    "`Этот пользователь уже заглушен в этом чате ~~lmfao sed rip~~`",
-                )
-        except AttributeError:
-            pass
-        except Exception as e:
-            return await edit_or_reply(event, f"**Ошибка : **`{e}`")
-        try:
-            await event.client(EditBannedRequest(event.chat_id, user.id, MUTE_RIGHTS))
-        except UserAdminInvalidError:
-            replied_user = await event.client.get_entity(event.chat_id)
-        if is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "`Этот пользователь уже отключен в этом чате`"
-            )
-        if event.chat_id == catub.uid:
-            return await edit_delete(event, "`Вы не можете заглушить себя`")
-        try:
-            mute(event.chat_id, event.chat_id)
-        except Exception as e:
-            await event.edit(f"**Ошибка **\n`{e}`")
-        else:
-            await event.edit("`Вы успешно заглушили этого человека.\n**｀-´)⊃━☆ﾟ.*･｡ﾟ **`"
-            )
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                "#MUTE\n"
-                f"**Никнейм :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Чат :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 @catub.cat_cmd(
