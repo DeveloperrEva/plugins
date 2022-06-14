@@ -512,6 +512,8 @@ async def endmute(event):
 )
 async def startmute(event):
     "To mute a person in that paticular chat"
+    try:
+        await event.client(EditBannedRequest(event.chat_id, user.id, MUTE_RIGHTS))
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
             return await event.edit(
@@ -528,9 +530,11 @@ async def startmute(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#SWmute\n"
+                "#PM_MUTE\n"
                 f"**Никнейм :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
             )
+    except:
+        pass
 
 @catub.cat_cmd(
     pattern="kick(?:\s|$)([\s\S]*)",
